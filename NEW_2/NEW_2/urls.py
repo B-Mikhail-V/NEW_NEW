@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from demo.views import DemoView, SensorView
+from demo.views import DemoView, SensorUpdate, SensorListView, MeasurementCreate, SensorDetailInfo
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/demo/', DemoView.as_view()),
-    path('api/sensor/<pk>/', SensorView.as_view()),
+    path('api/sensor/<pk>/', SensorUpdate.as_view()),
+    path('api/sensor_list/', SensorListView.as_view()),
+    path('api/measure/', MeasurementCreate.as_view()),
+    path('api/sensor_info/<pk>/', SensorDetailInfo.as_view()),
 ]

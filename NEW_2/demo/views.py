@@ -3,12 +3,14 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, ListCreateAPIView, \
+    RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Sensor, Measurement
-from .serializers import SensorSerializer
+from .serializers import SensorSerializer, MeasurementInfoSerializer, SensorDetailSerializer, MeasurementSerializer
+
 
 # @api_view(['GET', 'POST'])
 # def demo(request):
@@ -33,16 +35,21 @@ class DemoView(ListAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
 
-    def post(self, request):
-        sensor_new = Sensor.objects.create(
-            name=request.data['name'],
-            description=request.data['description']
-        )
-        return Response({'post': model_to_dict(sensor_new)})
-
-class DemoUpdate()
-
-
-class SensorView(RetrieveAPIView):
+class SensorUpdate(RetrieveUpdateAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
+
+
+# Список датчиков и добавление (создание) датчика
+class SensorListView(ListCreateAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+
+class MeasurementCreate(CreateAPIView):
+    queryset = Measurement.objects.all()
+    serializer_class = MeasurementSerializer
+
+class SensorDetailInfo(RetrieveAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorDetailSerializer
+
